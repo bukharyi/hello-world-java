@@ -56,25 +56,16 @@ task createZip(type: Zip) {
     destinationDirectory = file('build/distributions')
 }
 
-// // Task push build folder to GitHub
-// task pushToGitHub(type: Exec) {
-//     workingDir 'build'    
-//     // Initialize git
-//     commandLine 'git', 'init'
-//     exec()    
-//     // Add all files
-//     commandLine 'git', 'add', '.'
-//     exec()    
-//     // Commit the changes
-//     commandLine 'git', 'commit', '-m', 'Automated deployment'
-//     exec()    
-//     // Set the branch name
-//     commandLine 'git', 'branch', '-M', 'main'
-//     exec()    
-//     // Add the remote repository
-//     commandLine 'git', 'remote', 'add', 'origin', 'https://github.com/bukharyi/hello-world-java.git'
-//     exec()    
-//     // Push to the remote repository
-//     commandLine 'git', 'push', '-u', 'origin', 'main'
-//     exec()
-// }
+//Task push build folder to GitHub
+//Task to push build folder to GitHub (Windows version)
+task pushToGitHub(type: Exec) {
+    workingDir '.'  // Use the project root directory
+    commandLine 'cmd', '/c', '''
+        git init &&
+        git add . &&
+        git commit -m "Automated deployment" &&
+        git branch -M main &&
+        git remote add origin https://github.com/bukharyi/hello-world-java.git &&
+        git push -u origin main
+    '''
+}
